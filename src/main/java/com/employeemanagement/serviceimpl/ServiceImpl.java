@@ -48,15 +48,39 @@ public class ServiceImpl implements EmployeeService
 	}
 
 	@Override
-	public Employee updateEmployeeById(Employee employee, Integer id) {
-		// TODO Auto-generated method stub
+	public Employee updateEmployeeById(Employee employee, Integer id)
+	{
+		Employee findById = employeeRepo.findById(id).orElse(null);
+		if(findById != null)
+		{
+			findById.setName(employee.getName());
+			findById.setSalary(employee.getSalary());
+			findById.setContact(employee.getContact());
+			findById.setExperience(employee.getExperience());
+			findById.setDepartment(employee.getDepartment());
+			findById.setUpdatedBy(employee.getUpdatedBy());
+			findById.setUpdatedData(employee.getUpdatedData());
+			
+			Employee save = employeeRepo.save(findById);
+			
+		}
 		return null;
 	}
 
 	@Override
 	public String deleteEmployeeById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	    Optional<Employee> findById = employeeRepo.findById(id);
+	    if (findById.isPresent()) {
+	        try {
+	            employeeRepo.deleteById(id);
+	            return "Record deleted successfully.";
+	        } catch (Exception e) {
+	            // Handle or log the exception appropriately
+	            return "An error occurred while deleting the record.";
+	        }
+	    } else {
+	        return "There is no record with ID: " + id;
+	    }
 	}
 
 }
