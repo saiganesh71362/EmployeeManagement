@@ -41,9 +41,10 @@ public class ServiceImpl implements EmployeeService
 	}
 
 	@Override
-	public List<Employee> getAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Employee> getAllEmployees() 
+	{
+		List<Employee> findAll = employeeRepo.findAll();
+		return findAll;
 	}
 
 	@Override

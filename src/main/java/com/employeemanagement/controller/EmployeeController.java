@@ -1,5 +1,7 @@
 package com.employeemanagement.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +41,13 @@ public class EmployeeController
 		Employee employeeById = employeeService.getEmployeeById(id);
 		
 		return new ResponseEntity<>(employeeById,HttpStatus.OK);
+	}
+	
+	 @GetMapping("/allEmployees")
+	 public ResponseEntity<List<Employee>> getAllEmployees(){
+		 
+		 List<Employee> allEmployees = employeeService.getAllEmployees();
+		 return new ResponseEntity<List<Employee>>(allEmployees,HttpStatus.OK);
+		
 	}
 }
