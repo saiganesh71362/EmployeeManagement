@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.employeemanagement.appconstants.AppConstants;
+import com.employeemanagement.exceptionhandle.EmployeeDeletionException;
+import com.employeemanagement.exceptionhandle.EmployeeNotFoundException;
 import com.employeemanagement.model.Employee;
 import com.employeemanagement.repository.EmployeeRepo;
 import com.employeemanagement.service.EmployeeService;
@@ -23,8 +26,8 @@ public class ServiceImpl implements EmployeeService
 	@Override
 	public String createEmployee(Employee employee)
 	{
-		Employee save = employeeRepo.save(employee);
-		return "Recored Created Success Fully";
+		 employeeRepo.save(employee);
+		return AppConstants.RECORD_CREATD;
 	}
 
 	@Override
@@ -36,7 +39,7 @@ public class ServiceImpl implements EmployeeService
 			return findById.get();
 		}
 		else {
-			throw new Exception("Employee Not Found "+id);  // Handle Custom Exception
+			throw new EmployeeNotFoundException(AppConstants.NO_RECORD+id);  // Handle Custom Exception
 		}
 	}
 
@@ -61,7 +64,7 @@ public class ServiceImpl implements EmployeeService
 			findById.setUpdatedBy(employee.getUpdatedBy());
 			findById.setUpdatedData(employee.getUpdatedData());
 			
-			Employee save = employeeRepo.save(findById);
+		     employeeRepo.save(findById);
 			
 		}
 		return null;
@@ -73,13 +76,13 @@ public class ServiceImpl implements EmployeeService
 	    if (findById.isPresent()) {
 	        try {
 	            employeeRepo.deleteById(id);
-	            return "Record deleted successfully.";
-	        } catch (Exception e) {
+	            return AppConstants.DELETED_RECORD;
+	        } catch (EmployeeDeletionException e) {
 	            // Handle or log the exception appropriately
-	            return "An error occurred while deleting the record.";
+	            return AppConstants.DELETE_ERROR;
 	        }
 	    } else {
-	        return "There is no record with ID: " + id;
+	        return AppConstants.NO_RECORD + id;
 	    }
 	}
 
