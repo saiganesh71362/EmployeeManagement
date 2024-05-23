@@ -11,5 +11,5 @@ public class AppConstants
 
 	public static final String DELETED_RECORD = "Record deleted successfully.";
  
-	public static final  String DELETE_ERROR = "An error occurred while deleting the record.";
+	public static final  String DELETE_ERROR = "An error occurred while deleting the record time.";
 }
